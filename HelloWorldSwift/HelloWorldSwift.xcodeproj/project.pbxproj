@@ -397,6 +397,7 @@
 				9F6491E519C70830005EA08F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		9F6491E619C70830005EA08F /* Build configuration list for PBXNativeTarget "HelloWorldSwiftTests" */ = {
 			isa = XCConfigurationList;
@@ -405,6 +406,7 @@
 				9F6491E819C70830005EA08F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
