@@ -229,6 +229,9 @@ averageOf(1,2,3,4)
 /**********
 * Clojures
 **********/
+
+// Functions can be nested and nexted functions have access to code
+// declared in the outer function
 func returnFifteen() -> Int {
     var y = 10
     func add() {
@@ -238,6 +241,102 @@ func returnFifteen() -> Int {
     add()
     return y
 }
+returnFifteen()
+
+// Functions are first class types and can return another function
+func makeIncrementer() -> (Int -> Int) {
+    func addOne(number: Int) -> Int {
+        return 1 + number
+    }
+    return addOne
+}
+var increment = makeIncrementer()
+increment(7)
+
+// Functions can take other functions as arguments
+func hasAnyMatches(list: Int[], condition: Int -> Bool) -> Bool {
+    for item in list {
+        if condition(item) {
+            return true
+        }
+    }
+    return false
+}
+func lessThanTen(number: Int) -> Bool {
+    return number < 10
+}
+var numbers = [20, 19, 7, 11]
+hasAnyMatches(numbers, lessThanTen)
+
+numbers.map({
+    (number: Int) -> Int in
+    let result = 3 * number
+    return result
+    })
+
+numbers = [0,1,2,3,4]
+numbers.map({
+    (number: Int) -> Int in
+    if number % 2 == 0 {
+        return 1
+    }
+
+    return 0
+    })
+
+/********************
+* Objects and classes
+********************/
+
+class NamedShape {
+    var numSides = 0
+    var name: String
+    let color = "Blue"
+
+    init(name: String) {
+        self.name = name
+    }
+
+    func simpleDescription() -> String {
+        return "A \(self.color) shape with \(self.numSides) sides"
+    }
+
+    func setNumSides(sides: Int) {
+        self.numSides = sides
+    }
+}
+
+var shape = NamedShape(name: "Ha")
+shape.numSides = 7
+shape.simpleDescription()
+shape.setNumSides(4)
+shape.simpleDescription()
+
+class Square: NamedShape {
+    var sideLength: Double
+
+    init(sideLength: Double, name: String){
+        // Must set properties before calling init on super
+        self.sideLength = sideLength
+
+        super.init(name: name)
+
+        numSides = 4
+    }
+
+    func area() -> Double {
+        return self.sideLength * self.sideLength
+    }
+
+    override func simpleDescription() -> String {
+        return "A square with side of len \(self.sideLength)"
+    }
+}
+
+let test = Square(sideLength: 4.2, name: "Square")
+test.area()
+test.simpleDescription()
+
 
 
 
