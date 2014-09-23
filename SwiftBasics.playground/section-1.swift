@@ -102,6 +102,7 @@ var optionalName: String? = "Johnny"
 var greeting: String
 
 // if name is not nil, print a greeting
+// nil is considered falsd
 if let name = optionalName {
     greeting = "Hello, \(optionalName)"
 }
@@ -337,9 +338,115 @@ let test = Square(sideLength: 4.2, name: "Square")
 test.area()
 test.simpleDescription()
 
+class Circle: NamedShape {
+    var radius: Double
+
+    init(name: String, radius: Double) {
+        self.radius = radius
+        super.init(name: name)
+    }
+
+    func area() -> Double {
+        return 3.14 * radius * radius
+    }
+
+    override func simpleDescription() -> String {
+        return "A circle with a radius of \(self.radius)"
+    }
+}
+
+var circle = Circle(name: "Circle", radius: 4.12)
+circle.area()
+circle.simpleDescription()
+
+class EquilateralTraingle: NamedShape {
+    var sideLength: Double = 0.0
+
+    init(sideLength: Double, name: String) {
+        self.sideLength = sideLength
+
+        super.init(name: name)
+
+        self.numSides = 3
+    }
+
+    // Classes can have setters and getters for variables
+    // newValue is the explicit name used in a setter
+    var perimiter: Double {
+    get {
+        return 3.0 * self.sideLength
+    }
+//    set {
+    set (value){
+//        self.sideLength = newValue / 3.0
+        self.sideLength = value / 3.0
+    }
+    }
+
+    override func simpleDescription() -> String {
+        return "An equilateral trinagle with sides of length\(self.sideLength)"
+    }
+}
+
+var triangle = EquilateralTraingle(sideLength: 3.4, name: "triangle")
+triangle.perimiter
+triangle.perimiter = 9.9
+triangle.simpleDescription()
+
+class TriangleAndSquare {
+    var triangle: EquilateralTraingle {
+    willSet {
+        square.sideLength = newValue.sideLength
+    }
+    }
+
+    var square: Square {
+    willSet{
+        triangle.sideLength = newValue.sideLength
+    }
+    }
+
+    init(size: Double, name: String) {
+        square = Square(sideLength: size, name: name)
+        triangle = EquilateralTraingle(sideLength: size, name: name)
+    }
+
+}
+
+var triangleAndSquare = TriangleAndSquare(size: 10, name: "Another shape")
+triangleAndSquare.square.sideLength
+triangleAndSquare.triangle.sideLength
+triangleAndSquare.square = Square(sideLength: 50, name: "Large square")
+triangleAndSquare.triangle.sideLength
 
 
+// A special note on classes and methods
 
+class Counter {
+    var count: Int = 0
+
+    // Methods in classes can specify secondary names for parameters
+    // These names are used only in the method
+    func incrementBy (amount: Int, numberofTimes times: Int) {
+        count += amount * times
+    }
+
+}
+
+var counter = Counter()
+// Class methods must use the parameter names. The first parameter is
+// optional
+counter.incrementBy(2, numberofTimes: 7)
+
+
+// Optional values
+// if the value before the ? is nil, everythign after the ? is ignored
+let optionalSquare: Square? = Square(sideLength: 4.0, name: "optional square")
+let sideLength = optionalSquare?.sideLength
+
+/*************
+* Enumerations
+*************/
 
 
 
