@@ -28,8 +28,8 @@ let aConstant = 42
 //aConstant = 54
 
 // Explicitly define variable types
-var explicitInt : Integer
-let explicitDouble : Double = 3.14
+var explicitInt: Integer
+let explicitDouble: Double = 3.14
 
 // Values are not implicitly converted, they must be explicitly converted
 let label = "The width is "
@@ -448,14 +448,156 @@ let sideLength = optionalSquare?.sideLength
 * Enumerations
 *************/
 
+// Enumerations can have methods
+
+enum Rank: Int {
+    // Because the raw type of this enumeration is Int we must specify the 
+    // first value to be 1, all other values will increase
+    case Ace = 1
+    case Two, Three, Four, Five, Six, Seven, Eight ,Nine, Ten
+    case Jack, Queen, King
+
+    // A simple function inside an enum to retun a string
+    func simpleDescription() -> String {
+        switch self {
+        case .Ace:
+            return "ace"
+        case .Jack:
+            return "jack"
+        case .Queen:
+            return "queen"
+        case .King:
+            return "king"
+        default:
+            return String(self.toRaw())
+        }
+    }
+
+    // A compare method that compares one enumeration to another
+    func compare(card: Rank) -> Int {
+        if self.toRaw() < card.toRaw() {
+            return -1
+        } else if self.toRaw() > card.toRaw() {
+            return 1
+        }
+
+        return 0
+    }
+}
+let ace = Rank.Ace
+let aceRawValue = ace.toRaw()
+
+// Compare a queen to a Jack
+Rank.Queen.compare(Rank.Jack)
+
+// Use fromRaw and toRaw to covert from raw values to enumerated values
+if let convertedRank = Rank.fromRaw(3) {
+    let threeDescription = convertedRank.simpleDescription()
+}
+
+
+enum Suit {
+    case Spades, Hearts, Diamonds, Clubs
+
+    // A function to return the string type
+    func simpleDescription() -> String {
+        switch self {
+        case .Spades:
+            return "spades"
+        case .Hearts:
+            return "hearts"
+        case .Diamonds:
+            return "diamonds"
+        case .Clubs:
+            return "clubs"
+        }
+    }
+
+    // A function to return the color
+    func color() -> String {
+        switch self{
+        case .Spades, .Clubs:
+            return "black"
+        case .Hearts, .Diamonds:
+            return "red"
+        }
+    }
+}
+
+let hearts = Suit.Hearts
+let heartsDescription = hearts.simpleDescription()
+let heartsColor = hearts.color()
+
+/***********
+* Structures
+***********/
+
+// Structures support many of the same behaviors as classes including methods
+// and initializers
+// The largest difference is that structures are copied when passed while 
+// objects are passed by reference
+
+struct Card {
+    var rank: Rank
+    var suit: Suit
+
+    func simpleDescription() -> String {
+        return "The \(rank.simpleDescription()) of \(suit.simpleDescription())"
+    }
+
+    func createDeck() -> Card[] {
+        var deck = Card[]()
+
+        for var i = 1; i <= 13; i++ {
+
+            if let convertedRank = Rank.fromRaw(i) {
+                deck.append(Card(rank: convertedRank, suit: Suit.Hearts))
+                deck.append(Card(rank: convertedRank, suit: Suit.Clubs))
+                deck.append(Card(rank: convertedRank, suit: Suit.Diamonds))
+                deck.append(Card(rank: convertedRank, suit: Suit.Spades))
+            }
+        }
+
+
+        return deck
+    }
+}
+
+let threeOfSpades = Card(rank: .Three, suit: .Spades)
+
+// Create a deck
+let deck = threeOfSpades.createDeck()
+
+// Display the deck of cards
+for card in deck {
+    card.simpleDescription()
+}
 
 
 
 
 
+/**********
+* Protocols
+**********/
 
+// Classes, enums, and structs can all adopt protocols
+protocol ExampleProtocol {
+    var simpleDescription: String { get }
+    mutating func adjust()
+}
 
+class SimpleClass: ExampleProtocol {
+    var simpleDescription: String = "A very simple class."
+    var anotherProperty: Int = 69015
 
+    func adjust() {
+        simpleDescription += " Now 100% adjusted."
+    }
+}
+var a = SimpleClass()
+a.adjust()
+let aDescription = a.simpleDescription
 
 
 
