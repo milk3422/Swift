@@ -573,10 +573,6 @@ for card in deck {
     card.simpleDescription()
 }
 
-
-
-
-
 /**********
 * Protocols
 **********/
@@ -584,6 +580,8 @@ for card in deck {
 // Classes, enums, and structs can all adopt protocols
 protocol ExampleProtocol {
     var simpleDescription: String { get }
+
+    // mutating keyword means the method adjust modifies the structure
     mutating func adjust()
 }
 
@@ -599,14 +597,117 @@ var a = SimpleClass()
 a.adjust()
 let aDescription = a.simpleDescription
 
+// A structure inpmenting the protocol
+struct SimpleStructure: ExampleProtocol {
+    var simpleDescription: String = "A simple structure"
+
+    mutating func adjust() {
+        simpleDescription += " (adjusted)"
+    }
+}
+
+var b = SimpleStructure()
+b.adjust()
+let bDescription = b.simpleDescription
+
+// An enum implementing the protocol
+enum ExampleEnum : ExampleProtocol{
+    case Base, Adjusted
+
+    var simpleDescription: String { get {
+        return self.getDescription()
+    }
+    }
+
+    func getDescription() -> String{
+        switch self{
+        case Base:
+            return "A simple description of enum"
+        case .Adjusted:
+            return "Adjusted description of enum"
+        default:
+            return "default description"
+        }
+    }
+
+    mutating func adjust() -> Void{
+        self = ExampleEnum.Adjusted
+    }    
+}
+
+/***********
+* Extensions
+***********/
+
+// Extensions add functionality to an existing type
+
+extension Int: ExampleProtocol {
+    var simpleDescription: String {
+    return "the Number \(self)"
+    }
+
+    mutating func adjust() {
+        self += 42
+    }
+}
+
+7.simpleDescription
+var myInt = 7
+myInt.adjust()
+myInt
+
+extension Double {
+    func absoluteValue() -> Double {
+    if self < 0.0 {
+        return self * -1.0
+    }
+        return self
+    }
+}
+
+var myDouble = -11.23
+myDouble.absoluteValue()
+
+/*********
+* Generics
+*********/
+
+// ItemType will be inferred
+func reapeat<ItemType>(item: ItemType, times: Int) -> ItemType[] {
+    var result = ItemType[]()
+
+    for i in 0..times {
+        result += item
+    }
+
+    return result
+}
+reapeat("knock", 4)
 
 
+enum OptionalValue<T> {
+    case None
+    case Some(T)
+}
 
+var possibleInteger: OptionalValue<Int> = .None
+possibleInteger = .Some(100)
 
-
-
-
-
+// Use where after type to specify a list
+func anyCommonElements <T, U where T: Sequence,
+    U: Sequence,
+    T.GeneratorType.Element: Equatable,
+    T.GeneratorType.Element == U.GeneratorType.Element>(lhs: T, rhs: U) -> Bool {
+        for lhsItem in lhs {
+            for rhsItem in rhs {
+                if lhsItem == rhsItem {
+                    return true
+                }
+            }
+        }
+        return false
+}
+anyCommonElements([1,2,3], [3])
 
 
 
