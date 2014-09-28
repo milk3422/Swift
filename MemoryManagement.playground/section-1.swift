@@ -142,31 +142,3 @@ owners["Mary"]!.card = CreditCard(holder: owners["Mary"]!)
 
 // When the reference to 'Mary' is removed the CreditCard object is also deleted
 owners["Mary"] = nil
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
