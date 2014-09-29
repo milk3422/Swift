@@ -1,13 +1,10 @@
 import UIKit
 
 /*****************************************************************************
-* Classes and initialization in Swift
+* Initialization in structures and classes in Swift
 *
-*
-*
-* There are three main types of references available
-* - Structure Initialization
-
+* The main rules on initialization
+* - All properties must be defined before any methods can be called
 *
 *****************************************************************************/
 
@@ -48,3 +45,55 @@ struct anotherColor{
 
 // Create white using the memberwise initializer
 let white = anotherColor(red: 255.0, green: 255.0, blue: 255.0)
+
+
+
+/**************************
+* Initialization in Classes
+**************************/
+
+// A base class Car, that defines a car's color
+class Car {
+
+    // A property to hold the color of a car
+    var paintColor: Color
+
+    // The initializer to set the color of the car
+    init(color: Color) {
+        self.paintColor = color
+    }
+}
+
+// A subclass of Car, RaceCar
+class RaceCar: Car {
+
+    // The subclass has its own property
+    var hasTurbo: Bool
+
+    // The subclass has its own initializer to initialize its property 
+    // and the superclass, Car
+    init(color: Color, turbo: Bool) {
+        // Subclasses must first initialize their own properties
+        self.hasTurbo = turbo
+
+        // Then initialization of superclasses is allowed
+        super.init(color: color)
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
