@@ -79,11 +79,45 @@ class RaceCar: Car {
         // Then initialization of superclasses is allowed
         super.init(color: color)
     }
+
+    // A convenience initializer allows the classes designated initializer
+    // to be called by passing less options
+    convenience override init(color: Color) {
+        self.init(color: color, turbo: true)
+    }
+
+    // Convenience initializers can call convenience initializers
+    convenience init() {
+        self.init(color: Color(grayScale: 0.4))
+    }
 }
 
+// Create an indy car using the RaceCar convenience method
+let indyCar = RaceCar()
 
 
+// A subclass that defines all of the properties and does not include an
+// initializer inherits initializers from its super class
+class FormulaOne: RaceCar {
+    let minWeight = 642
+}
 
+// Define a Formula One car using the initializers from
+let formulaOne = FormulaOne(color: Color(grayScale: 255.0))
+
+
+// A subclass that does include a init method does not inherrit initializers
+// from its super class
+class StockCar: RaceCar {
+    let minWeight = 642
+
+    init(color: Color) {
+        super.init(color: color, turbo: false)
+    }
+}
+
+// Create a stock car using the stock car init method
+let stockCar = StockCar(color: Color(grayScale: 44.5))
 
 
 
