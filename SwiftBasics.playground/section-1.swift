@@ -179,9 +179,148 @@ let justOverOneMillion = 1_000_000.000_000_1
 // at hand
 
 // Integer Conversion
-// 
+// If a number cannot fit into a constant or variable, an error will be 
+// reported when code is compiled. Uncomment the following examples to see the 
+// errors
+
+// UInt cannot store negative numbers
+//let cannotBeNegative: UInt8 = -1
+
+// Int8 cannot store a number larger than it's max value
+//let tooBig: Int8 = Int8.max + 1
+
+// Because each numeric type can store a different range of values, you must 
+// opt-in to numeric type conversion on a case by case basis
+
+// To convert one specific number type to another, a number must be initialized
+// with the desired types existing value
+
+let twoThousand: UInt16 = 2_000
+let one: UInt8 = 1
+let twoThousandAndOne = twoThousand + UInt16(one)
+
+// The above example shows that a UInt16 and a UInt8 cannot be added without 
+// calling UInt16() to creat a new UInt16 with the value of one. Because
+// both numbers are UInt16, twoThousandAndOne is inferred to be a UInt16
+
+// Conversions between integers and floating-point numeric types must be made
+// explicit
+
+let three = 3
+let pointOneFourOneFiveNine = 0.14159
+let pie = Double(three) + pointOneFourOneFiveNine
+
+// In this example the constant three is used to create a new Double so that
+// both sides of the addition are of the same type.
+
+// Floating-point to Integer conversion must also be explicit
+
+// integerPi is inferred to be of type Int because an integer is created from
+// the constant pie
+let integerPi = Int(pie)
+
+// Floating-point values are always truncated when Integers are created
+
+// The rules for combining numeric constants and variables are different then 
+// the rules for combining numeric literals. Since literals do not have an
+// explicit type, 3 can be combined with 0.123 without having to perform any
+// explicit conversion
+let literalAddition = 3 + 0.123
 
 
+/*************
+* Type Aliases
+*************/
+
+// Type aliases can be used to define alternative names for existing types. 
+// They are created using the typealias keyword
+
+// In the following example, AudioSample is defined as a UInt16 and the 
+// maxAmplitude is set to AudioSample.min or 0
+typealias AudioSample = UInt16
+var maxAmplitude = AudioSample.min
+
+
+/*************
+* Booleans
+*************/
+
+// Swift provides a basic Boolean type called Bool. The value is restricted
+// to true or false:
+
+let orangesAreOrange = true
+let turnipsAreDelicious = false
+
+// The values of the previous constants are inferred to be of type Bool because
+// they were declared with true and flase.
+
+// Boolean values are very useful in conditional statements:
+if turnipsAreDelicious {
+    println("Nom nom nom, tasty turnips!")
+} else {
+    println("Eww, turnips are horrible.")
+}
+
+// Swift's type saftey prevents non-Boolean values from being substituted for
+// Bool. Uncomment the following example to see the error produced.
+//let i = 1
+//if i {
+//    println("This produces an Error")
+//}
+
+// Hower the alternative example is valid
+let i = 1
+if i == 1 {
+    println("This does not produce an Error")
+}
+
+// Comparison results == produce a type Bool
+
+
+/*******
+* Tuples
+*******/
+
+// Tuples group multiple values together into a single compound value. The 
+// values within a tuple can be of any type and do not have to be of the same
+// type as each other. 
+
+// The following example uses a Tuple that describes an HTTP status code. The
+// Tuple stores both and Int and a String
+
+let http404Error = (404, "Not Found")
+
+// Tuples can be created fomr any permutation of types and they can contain as
+// many different types as you like. You can have a Tuple of (Int, Int, Int) or
+// a Tuple of (Bool, String, Int, Double).
+
+// A Tuple can be decomposed into separate constants or variables and be
+// displayed using println
+let (statusCode, statusMessage) = http404Error
+println("The status code is \(statusCode)")
+println("The status message is \(statusMessage)")
+
+// If only some values of the tuple are needed you can ignore parts with an 
+// underscore (_) when decomposing the Tuple:
+let (justTheStatusCode, _) = http404Error
+println("The status code is \(justTheStatusCode)")
+
+// Alternatively you can access the individual element values in a Tuple using
+// index numbers starting at 0:
+println("The status code is \(http404Error.0)")
+println("The status message is \(http404Error.1)")
+
+// Tuples also allow individual elements to be named when a tuple is defined
+let http200Status = (StatusCode: 200, Description: "OK")
+
+// If the elements are named, they name can be used to access the values of the
+// elements
+println("The status code is \(http200Status.StatusCode)")
+println("The status message is \(http200Status.Description)")
+
+// Tuples are great when they return values of functions. Tuples allow functions
+// to return multiple values, providing more useful information about its 
+// outcome.
 
 
 
