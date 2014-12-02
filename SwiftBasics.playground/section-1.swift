@@ -323,17 +323,127 @@ println("The status message is \(http200Status.Description)")
 // outcome.
 
 
+/**********
+* Optionals
+**********/
+
+// Optionals should be used where a value may be absent
+
+// String's toInt() method will return an optional Int because toInt() may 
+// not be able to convert the string. In the following example, "123" is 
+// converted to an integer and returned
+
+let possibleNumber = "123"
+let convertedNumber = possibleNumber.toInt()
+
+// The next example will return nil because "asdf" cannot be converted to an 
+// Int
+
+"asdf".toInt()
+
+// A optional variable can be set to a valueless state by assigning it the value
+// nil
+
+// serverResponseCode first contains 404, then it is set to nil
+var serverResponseCode: Int? = 404
+serverResponseCode = nil
+
+// Note: nil cannot be used with nonoptional constants and variables.
+
+// If an optional constant or variable is defined without a default value, 
+// it is automatically set to nil
+
+// surveyAnswer is automatically nil
+var surveyAnswer: String?
+
+// An if statement can be used to determine if an optional contains a value
+// by comparing it to nil. 
+
+// If an optional has a value it will not be equal to nil
+
+if convertedNumber != nil {
+    println("convertedNumber contains an integer value.")
+}
+
+// When you are absolutely sure an optional does contain a value, it can be 
+// accessed by adding an exclimation mark (!) to the end of the options name.
+// This is known as forced unwrapping the optional's value
+
+if convertedNumber != nil {
+    println("convertedNumber contains an integer value of \(convertedNumber!).")
+}
+
+// Note: Trying to force unwrap an optional without a value will cause a
+// runtime error
 
 
+/*****************
+* Optional Binding
+*****************/
+
+// Optional binding determines if an optional has a value and makes its value
+// temporarily available within an if or while statement
+
+// Using the possibleNumber from the previous section
+
+if let actualNumber = possibleNumber.toInt() {
+    println("\'\(possibleNumber)\' has an integer value of \(actualNumber)")
+} else {
+    println("\'\(possibleNumber)' could not be converted to an integer")
+}
+
+// Both constants and variables can be used with optional binding, so if the 
+// value needed to be changed, a variable can be used
+
+// Implicit Unwrapped Optionals is an optional that will always have a value 
+// after it is first set. To define an implicit unwrapped optional, use an 
+// exclimation (!) after the type instead of a question mark (?). Implicit
+// Unwrapped Optionals are useful when an optional's value is confirmed to exist
+// immediately after the optional is first defined and can definitely be
+// assumed to exist every point afterwards. The primary use of the implicitly
+// unwrapped optionals in Swift is during class initialization
+
+// The first example is an explicity optional
+let possibleString: String? = "An optional string."
+let forcedString: String? = possibleString! // requires a bang to unwrap
+
+// The second example is an implicit optional, it does not need an 
+// exclimation to be unwrapped because it is implicitly defined
+let assumedString: String! = "An implicitly unwrapped optional string."
+let implicitString: String = assumedString // no need for a bang
+
+// An implicity unwrapped optional can be though of as giving permission for
+// the optional to be unwrapped automatically without having to be checked
+
+// Note: If an implicitly unwrapped optional does not contain a value and it
+// is accessed it will cause a runtime error
+
+// An implicitly unwrapped optional can be treated like a normal optional
+if assumedString != nil {
+    println(assumedString)
+}
+
+// An implicitly unwrapped optional can also be used with optional binding
+if let definiteString = assumedString {
+    println(definiteString)
+}
+
+// Note: Do not use an implicitly unwrapped optional when there is a 
+// possibility of a variable becoming nil at a later point
 
 
+/***********
+* Assertions
+***********/
 
+// An assertion is a runtime check that a logical condition is true. If an 
+// assertion is false, code execution ends and the application is terminated
 
+// In the following example, code execution will only continue if age >= 0
+// If the value of age is negative, the assertion triggers and the application
+// is terminiated
 
+let age = -3
+assert(age >= 0, "A person's age cannot be less than zero")
 
-
-
-
-
-
-
+// Assertions can be used during the devlopment phase to debug an application
