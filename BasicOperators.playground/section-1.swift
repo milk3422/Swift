@@ -179,24 +179,172 @@ d += 2
 * Comparison Operators
 *********************/
 
+// Swift supports all the standard operators
+// Eaual to (a == b)
+// Not equal to (a != b)
+// Greater than (a > b)
+// Less than (a < b)
+// Greater than or equal to (a >= b)
+// Less than or equal to (a <= b)
+
+1 == 1  // true, becaues 1 is equal to 1
+2 != 1  // true, because 2 is not equal to 1
+2 > 1   // true, because 2 is greater than 1
+1 < 2   // true, because 1 is less than 2
+1 >= 1  // true, because 1 is greater than or equal to 1
+2 <= 1  // false, because 2 is not less than or equal to 1
+
+// Comparison operators are used in coditional statements
+
+let name = "world"
+
+if name == "world" {
+    println("Hello, world")
+} else {
+    println("I'm sorry \(name), but I don't recognize you")
+}
 
 
+/*****************************
+* Ternary Conditional Operator
+*****************************/
+
+// The ternay conditional operator is an operator that has three parts with the
+// form
+// question ? answer1 : answer2
+// It is a shorter version of a traditional if/else conditional. If the question
+// is true, it evaluates answer1 and returns its value; otherwise, it evaluates
+// answer2 and returns its value.
+
+// As an example we can calculate row height base on a header that either exists
+// or does not exist
+let contentHeight = 40
+let hasHeader = true
+
+let rowHeight = contentHeight + (hasHeader ? 50 : 20)
+
+// The previous ternay conditional is short hand for
+var newRowHeight = contentHeight
+if hasHeader {
+    newRowHeight = newRowHeight + 50
+} else {
+    newRowHeight = newRowHeight + 20
+}
 
 
+/************************
+* Nil Coalescing Operator
+************************/
+
+// The nil coalescing (a ?? b) unwraps an optional a if it contains a value, 
+// or returns a default value b, if a is nil. The expression a is always of an 
+// optional type. The expression b must match the type that is stored inside a.
+
+// The nil coalescing operator is shorehand for the code below: 
+// a != nil ? a! : b
+
+// The following example uses the nil coalescing operator to choose between a 
+// default color name and an optional user-defined color name
+let defaultColorName = "red"
+var userDefinedColorName: String? // defaults to nil
+
+var colorNameToUse = userDefinedColorName ?? defaultColorName
 
 
+// If a value is assigned to userDefinedColorName and the nil coalscing operator
+// is used again it will retun the unwrapped value in userDefinedColorName
+userDefinedColorName = "green"
+colorNameToUse = userDefinedColorName ?? defaultColorName
 
 
+/****************
+* Range Operators
+****************/
+
+// Swift includes two range operators: the closed range operator and the 
+// half-open range operator
+
+// The closed range operator is (a...b) and is a range that runs from a to b,
+// and includes the values a and b. The value of a must not be greater than b.
+
+for index in 1...5 {
+    println("\(index) times 5 is \(index * 5)")
+}
+
+// The half-open range operator (a..<b) defines a range that runs from a to b,
+// but does not include b. It is said to be half open because it contains its
+// first value, but not its final value. As with the closed range operator, the
+// value of a must not be greater than the value of b.
+
+let names = ["Anna", "Alex", "Brian", "Jack"]
+let count = names.count
+
+for l in 0..<count {
+    println("Person \(l+1) is called \(names[l])")
+}
+
+// Note: the previous example assigns l the values 0 to 3.
 
 
+/******************
+* Logical Operators
+******************/
 
+// Logical operators modify or combine the Boolean logic values true and false.
+// Swift supports three logical operators:
+// Logical NOT (!a)
+// Logical AND (a && b)
+// Logical OR (a || b)
 
+// The logical not operator (!a) inverts the boolean value so that true becomes
+// false and false becomes true
 
+let allowedEntry = false
 
+if !allowedEntry {
+    println("ACCESS DENIED!")
+}
 
+// The logical and operator (a && b) will only return true if both values, a 
+// and b, are true. If a or b is false, the logical and operator will return
+// false.
 
+let enteredDoorCode = true
+let passedRetinaScan = false
+if enteredDoorCode && passedRetinaScan {
+    println("Welcome!")
+} else {
+    println("ACCESS DENIED!")
+}
 
+// The logical or operator (a || b) will compute the logical or of the values
+// a and b. It will return true if and only if a or b is true, otherwise it will
+// return false.
 
+let hasDoorKey = false
+let knowsOverridePassword = true
 
+if hasDoorKey || knowsOverridePassword {
+    println("Welcome!")
+} else {
+    println("ACCESS DENIED!")
+}
 
+// Logical operators can be combined, but be careful how the statement is 
+// evaluated
 
+if enteredDoorCode && passedRetinaScan || hasDoorKey || knowsOverridePassword {
+    println("Welcome!")
+} else {
+    println("ACCESS DENIED!")
+}
+
+// The previous example may seem confusing. To alleviate the confusion, It is 
+// sometimes useful to use explicit parenthesis to make conditional statements 
+// more clear
+
+if (enteredDoorCode && passedRetinaScan) || hasDoorKey || knowsOverridePassword {
+    println("Welcome!")
+} else {
+    println("ACCESS DENIED!")
+}
