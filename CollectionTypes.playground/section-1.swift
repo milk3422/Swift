@@ -146,8 +146,34 @@ var anotherThreeDoubles = [Double](count: 3, repeatedValue: 2.5)
 var sixDoubles = threeDoubles + anotherThreeDoubles
 
 
+/*************
+* Dictionaries
+*************/
+
+// Dictionaries are containers that store multiple values of the same type.
+// Each value is associated with a unique key and acts as identifier for that
+// value. A dictionary is best used when values need to be looked up by their
+// identifier, or key.
+
+// Dictionaries can be defined by using the syntax Dictionary<Key, Valye>,
+// where Key is the type of valye that can be used as a dictionary key, and 
+// Value is the type of value that the dictionary stores for those keys.
+
+// The shorthand notation, [Key: Value], can also be used and is preferred.
 
 
+/********************
+* Dictionary Literals
+********************/
+
+// Dictionaries can be initialized with literals, whcih has a similar sntax to
+// and array literal. To initialize a dictionary literal, a key-value pair
+// is specified.
+
+var airports: [String: String] = ["YYZ": "Toronto Pearson", "DUB": "Dublin"]
+
+// The previous example declaraes a dictionary as a variable so it can change
+// over time.
 
 
 
